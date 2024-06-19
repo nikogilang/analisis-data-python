@@ -99,7 +99,6 @@ fig.update_traces(colorscale='balance')
 fig.update_layout(width=1200, height=600)
 fig.update_layout(title="Plot Korelasi Variabel Numerik")
 fig.show()
-st.plotly_chart(fig, use_container_width=True)
 
 # Plot Distribusi Variabel Numerik
 
