@@ -73,12 +73,14 @@ for col in var_numeric:
     fig.update_yaxes(title_text="Jumlah")
     fig.update_layout(width=800, height=600)
     fig.show()
+    st.plotly_chart(fig, use_container_width=True)
 
 # Hubungan Season dan Jumlah Sewa
 
 fig = px.box(df_day, x='season', y='cnt')
 fig.update_layout(title='Hubungan Season dan Jumlah Sewa')
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 # Hubungan Weekday dan Jumlah Sewa
 
@@ -87,6 +89,7 @@ df_day['weekday'] = df_day['weekday'].astype('category')
 fig = px.box(df_day, x='weekday', y='cnt')
 fig.update_layout(title='Hubungan Hari dan Jumlah Sewa')
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 # Ubah tipe data kolom 'dteday' menjadi tipe data datetime
 df_day['dteday'] = pd.to_datetime(df_day['dteday'])
@@ -101,6 +104,7 @@ fig = px.box(df_day, x='season', y='cnt', color='season',
 fig.update_layout(title='Penggunaan Sepeda Berdasarkan Musim',
                   xaxis_title='Musim', yaxis_title='Jumlah Sewa Sepeda')
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 # Ubah tipe data kolom 'dteday' menjadi tipe data datetime
 df_day['dteday'] = pd.to_datetime(df_day['dteday'])
@@ -119,6 +123,7 @@ fig = px.bar(df_day, x='season', y='cnt', color='season',
 
 fig.update_layout(xaxis_title='Musim', yaxis_title='Jumlah Sewa Sepeda')
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 # Mengonversi tipe data kolom 'dteday' menjadi tipe data datetime
 df_day['dteday'] = pd.to_datetime(df_day['dteday'])
@@ -141,6 +146,7 @@ fig.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 fig.update_layout(xaxis_title='Hari Libur (0: Tidak, 1: Ya)', yaxis_title='Rata-rata Jumlah Sewa Sepeda')
 fig.update_xaxes(tickvals=[0, 1], ticktext=['Hari Kerja', 'Akhir Pekan'])
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 df_day['weekday'] = df_day['weekday'].astype('category')
 
@@ -157,3 +163,4 @@ fig = px.bar(weekday_counts, x='weekday', y='cnt',
 
 fig.update_layout(xaxis_title='Hari', yaxis_title='Jumlah Sewa Sepeda Rata-rata')
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
