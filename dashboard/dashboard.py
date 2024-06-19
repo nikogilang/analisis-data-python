@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import streamlit as st
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
@@ -62,6 +63,7 @@ fig.update_traces(colorscale='balance')
 fig.update_layout(width=1200, height=600)
 fig.update_layout(title="Plot Korelasi Variabel Numerik")
 fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 # Plot Distribusi Variabel Numerik
 
