@@ -24,7 +24,6 @@ df_day
 
 df_hour
 
-"""### Assessing Data"""
 
 df_day.info()
 
@@ -37,7 +36,6 @@ print(df_day.isna().sum())
 print('\nDataFrame Jam:')
 print(df_hour.isna().sum())
 
-"""Mencari nilai duplikasi pada Dataframe"""
 
 print('DataFrame Hari:')
 print(df_day.duplicated().sum())
@@ -45,21 +43,12 @@ print(df_day.duplicated().sum())
 print("DataFrame Jam:")
 print(df_hour.duplicated().sum())
 
-"""### Cleaning Data
-
-Mengubah tipe data
-"""
 
 df_day['dteday'] = pd.to_datetime(df_day['dteday'])
 df_hour['dteday'] = pd.to_datetime(df_hour['dteday'])
 
 print('dtday_day  : ', df_day['dteday'].dtype)
 print('dtday_hour : ',df_hour['dteday'].dtype)
-
-"""## Exploratory Data Analysis (EDA)
-
-### Explore ...
-"""
 
 df_day.describe()
 
@@ -97,11 +86,6 @@ fig = px.box(df_day, x='weekday', y='cnt')
 fig.update_layout(title='Hubungan Hari dan Jumlah Sewa')
 fig.show()
 
-"""## Visualization & Explanatory Analysis
-
-### Pertanyaan 1: Apakah terdapat perbedaan pola penggunaan sepeda antara musim panas, musim gugur, musim dingin, dan musim semi?
-"""
-
 # Ubah tipe data kolom 'dteday' menjadi tipe data datetime
 df_day['dteday'] = pd.to_datetime(df_day['dteday'])
 
@@ -133,11 +117,6 @@ fig = px.bar(df_day, x='season', y='cnt', color='season',
 
 fig.update_layout(xaxis_title='Musim', yaxis_title='Jumlah Sewa Sepeda')
 fig.show()
-
-"""Visualisasi box plot dan bar plot menunjukkan variasi pola penggunaan sepeda berdasarkan musim. Dari grafik-grafik tersebut, terlihat bahwa jumlah sewa sepeda cenderung meningkat seiring pergantian musim dari musim semi hingga musim gugur, sementara menurun pada musim yang lebih dingin seperti musim dingin. Terdapat beberapa data outlier pada data tersebut, menunjukkan adanya kejadian yang memengaruhi jumlah sewa sepeda pada musim tertentu. Analisis visual ini memberikan informasi dan data berharga bagi pengelola layanan penyewaan sepeda untuk mengelola stok sepeda dan menyesuaikan strategi pemasaran berdasarkan tren penggunaan sepeda pada tiap musim.
-
-### Pertanyaan 2: Bagaimana perubahan pola penggunaan sepeda selama akhir pekan (hari libur) dibandingkan dengan hari kerja?
-"""
 
 # Mengonversi tipe data kolom 'dteday' menjadi tipe data datetime
 df_day['dteday'] = pd.to_datetime(df_day['dteday'])
@@ -176,11 +155,3 @@ fig = px.bar(weekday_counts, x='weekday', y='cnt',
 
 fig.update_layout(xaxis_title='Hari', yaxis_title='Jumlah Sewa Sepeda Rata-rata')
 fig.show()
-
-"""Visualisasi box plot dan bar plot dari hari-hari yang berkaitan dengan jumlah sewa, dapat dilihat pada grafik pertama bahwa lebih banyak penyewaan sepeda di hari-hari kerja dibandingkan dengan hari libur. Sedangkan pada hari-hari dalam seminggu tampak adanya kenaikan dimulai dari hari minggu ke jumat, lalu turun lagi ketika di hari sabtu. Informasi dan data ini bisa digunakan oleh pihak penyewa sepeda untuk memaksimalkan target pasar dan strategi pemasaran.
-
-## Conclusion
-
-1. Terdapat perbedaan jumlah sewa sepeda cenderung meninggi dimulai dari musim semi hingga musim gugur, sementara cenderung menurun pada musim dingin. Hal ini bisa dikarenakan kondisi salju dan cuaca yang dingin yang mempersulit ketika menggunakan sepeda.
-2. Rata-rata jumlah sewa sepeda cenderung lebih tinggi pada hari kerja dibandingkan dengan hari libur. Hal ini mungkin disebabkan oleh penggunaan sepeda sebagai mode transportasi untuk bepergian dan beraktivitas lebih banyak digunakan pada saat hari kerja.
-"""
