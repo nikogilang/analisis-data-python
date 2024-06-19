@@ -18,7 +18,7 @@ Original file is located at
 
 ## Import Semua Packages/Library yang Digunakan
 """
-
+pip install numpy pandas scipy matplotlib seaborn jupyter streamlit babel plotly
 import http
 import pandas as pd
 import matplotlib.pyplot as plt
