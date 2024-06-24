@@ -32,41 +32,40 @@ if st.sidebar.checkbox("Tampilkan Statistik Ringkas"):
 
 # Sidebar
 st.sidebar.title("Pilihan Visualisasi")
-visualization_option = st.sidebar.radio("Pilih visualisasi:", ["Suhu vs Jumlah Pengguna Terdaftar",
-                                                               "Cuaca vs Jumlah Sewa Sepeda (Musim Panas)",
-                                                               "Penggunaan Sepeda Berdasarkan Musim",
+visualization_option = st.sidebar.radio("Pilih visualisasi:", ["Penggunaan Sepeda Berdasarkan Musim",
+                                                               "Tanggal vs Jumlah Sewa Sepeda",
                                                                "Rata-rata Penggunaan Sepeda pada Akhir Pekan vs. Hari Kerja"])
 
-# Visualisasi berdasarkan pilihan pada sidebar
-if visualization_option == "Suhu vs Jumlah Pengguna Terdaftar":
-    st.header("Hubungan Suhu dengan Jumlah Pengguna Terdaftar")
-    fig = go.Figure(data=go.Scatter(x=df_day["temp"], y=df_day["registered"], mode='markers'))
-    fig.update_layout(title="Hubungan Suhu dengan Jumlah Pengguna Terdaftar",
-                      xaxis_title="Suhu (temp)",
-                      yaxis_title="Jumlah Pengguna Terdaftar")
+season_mapping = {1: 'Spring', 2: 'Summer', 3: 'Fall', 4: 'Winter'}
+df_day['season'] = df_day['season'].map(season_mapping)
+
+week_mapping = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
+df_day['weekday'] = df_day['weekday'].map(week_mapping)
+
+if visualization_option == "Penggunaan Sepeda Berdasarkan Musim":
+    st.header("Grafik Penyewaan Sepeda Berdasarkan Musim")
+    fig = px.pie(df_day, names='season', values='registered', title='Jumlah Pengguna Terdaftar Berdasarkan Musim (2011-2012)')
+    fig.update_traces(textposition='inside', textinfo='percent+label')
     st.plotly_chart(fig)
 
-elif visualization_option == "Cuaca vs Jumlah Sewa Sepeda (Musim Panas)":
-    st.header("Pengaruh Cuaca terhadap Jumlah Sewa Sepeda (Musim Panas)")
-    filtered_data = df_day[df_day["season"] == 2]
-    fig = go.Figure(data=go.Bar(x=filtered_data["weathersit"], y=filtered_data["cnt"]))
-    fig.update_layout(title="Pengaruh Cuaca terhadap Jumlah Sewa Sepeda (Musim Panas)",
-                      xaxis_title="Cuaca (weathersit)",
-                      yaxis_title="Jumlah Sewa Sepeda (cnt)")
-    st.plotly_chart(fig)
-
-elif visualization_option == "Penggunaan Sepeda Berdasarkan Musim":
-    st.header("Penggunaan Sepeda Berdasarkan Musim")
-    df_day['dteday'] = pd.to_datetime(df_day['dteday'])
-    df_day['month'] = df_day['dteday'].dt.month
-    fig = go.Figure(data=[go.Box(x=df_day['season'], y=df_day['cnt'], boxmean='sd')])
-    fig.update_layout(title='Penggunaan Sepeda Berdasarkan Musim',
-                      xaxis_title='Musim',
-                      yaxis_title='Jumlah Sewa Sepeda')
-    st.plotly_chart(fig)
+elif visualization_option == "Tanggal vs Jumlah Sewa Sepeda":
+    st.header("Pola Penyewaan Sepeda Sepanjang Tahun")
+    fig_scatter = px.scatter(df_day, x="dteday", y=["registered", "casual"], title="Hubungan Tanggal dengan Jumlah Pengguna Registered dan Casual")
+    fig_scatter.update_xaxes(title="Tanggal")
+    fig_scatter.update_yaxes(title="Jumlah Pengguna")
+    st.plotly_chart(fig_scatter)
+    fig_line = px.line(df_day, x="dteday", y=["registered", "casual"], title="Hubungan Tanggal dengan Jumlah Pengguna Registered dan Casual")
+    fig_line.update_xaxes(title="Tanggal")
+    fig_line.update_yaxes(title="Jumlah Pengguna")
+    st.plotly_chart(fig_line)
 
 else:
     st.header("Rata-rata Penggunaan Sepeda pada Akhir Pekan vs. Hari Kerja")
+    fig = px.bar(df_day, x="weekday", y="cnt", title="Grafik Hari dengan Jumlah Pengguna")
+    fig.update_xaxes(title="Hari")
+    fig.update_yaxes(title="Jumlah Pengguna")
+    st.plotly_chart(fig)
+    
     df_day['dteday'] = pd.to_datetime(df_day['dteday'])
     df_day['day_of_week'] = df_day['dteday'].dt.dayofweek
     df_day['is_weekend'] = df_day['day_of_week'].isin([5, 6]).astype(int)
