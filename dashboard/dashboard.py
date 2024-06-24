@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go  # Ganti baris impor ini
+import plotly.express as px
 import types
 
 # Load data
