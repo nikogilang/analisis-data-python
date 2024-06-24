@@ -6,7 +6,7 @@ import types
 # Load data
 @st.cache_data(hash_funcs={types.FunctionType: id})
 def load_data():
-    day_url = https://raw.githubusercontent.com/nikogilang/analisis-data-python/main/Bike-sharing-dataset/day.csv'
+    day_url = 'https://raw.githubusercontent.com/nikogilang/analisis-data-python/main/Bike-sharing-dataset/day.csv'
     df_day = pd.read_csv(day_url)
     return df_day
 
